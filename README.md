@@ -5,35 +5,38 @@ My project consists of only a single program, which as I believe satisfies both 
 2. Leaving the museum by people visiting hall B in the shortest possible time.
 ---
 ## Conceptions:
-- Visitors as threads, that can enter the museum multiple number of times (simulation of new visitors). #FIXME
+- Visitors as threads, (threads can loop multiple times to simulate new visitors).
 - There is no race condition on any resources since multiple visitors can contemplate the same pieces of art at the same time.
-- I also assume that people can pass each other in the door (I can swap two people that want to enter different halls). ?? is it needed??
 - Time of visiting a given hall is not predefined. (Algorithm draws random number from some interval every time a visitor enters the room).
 ---
 ## Scheme:
 (1) Each visitor initially waits for some time (in real life all visitors would not
     want to enter the museum at exactly the same time)
 
-(2) Then visitor decides how much is he willing to spend in hallA
+(2) Then visitor decides how much is he willing to spend in hall A
 
-(3) Visitor decides whether he wants to enter hallB or leave the museum
-  - (3a) if he chooses to enter hallB, then he decides how long he wants to stay
-  - (4a) visitor indicates that he wants to leave hallB, if current state allows such
-        operation then he leaves, otherwise he waits for free space in hallA, and then go
-        back to hallA
+(3) Visitor decides whether he wants to enter hall B or leave the museum
+  - (3a) if he chooses to enter hall B, then he decides how long he wants to stay
+  - (4a) visitor indicates that he wants to leave hall B, if current state allows such
+        operation then he leaves, otherwise he waits for free space in hall A, and then go
+        back to hall A
  
-(5) Visitor enters hall A once again, spends some time looking at arts and finally leaves.
+(5) If B was visited, then comes back to hall A, spends some time looking at arts once again and finally leaves.
+
+If visitor have chosen not to visit hall B, then leaves hall A immediately after looking at art.
 > more detailed expanations of the algorithm are included as comments in the code.
+
+
 ---
 ## Some insights and remarks:
-- I can't allow visitors to enter hallA  from outside when there is only one place left in hallA because I don't know in advance whether the visitor is willing to enter hallB or not
-  > this is very important because if I let to a situation that hallB is full and hallA is full and all processes from hallA want to enter hallB, then I would have the **deadlock**
+- I can't allow visitors to enter hall A from outside when there is only one place left in hallA because I don't know in advance whether the visitor is willing to enter hall B or not
+  > this is very important because if I let to a situation that hall B is full and hall A is full and all processes from hall A want to enter hallB, then I would have the **deadlock**
   
   > to prevent such situation, I decided to use mutexes and conditional variables instead of counting semaphores, even though semaphores seemed to be more intuitive at a first glance.
 
 - Mutexes lock `countA` and `countB` variables, whose role is to count number of people in respective halls.
 - Conditional variables play crucial role in the synchronisation of my algorithm
-  > ... #FIXME
+  > They are used to perform `wait` and `broadcast` calls, to communicate between threads
 
 - mutexes are always nested
   > to avoid the deadlock
