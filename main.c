@@ -9,10 +9,7 @@
 #include "headers.h"
 
 
-
-
 int main() {
-
     // initialisation
     pthread_mutex_init(&mutexHallA, NULL);
     pthread_mutex_init(&mutexHallB, NULL);
@@ -31,8 +28,7 @@ int main() {
             return 2;
         }
     }
-
-    
+  
     // joining threads
     for (int i = 0; i < THREAD_NUM; i++) {
         if (pthread_join(threads[i], NULL) != 0) {
