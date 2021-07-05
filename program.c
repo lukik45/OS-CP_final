@@ -8,28 +8,9 @@
 
 #include "headers.h"
 
-// PROGRAM 2 --> let visitors from B leave as soon as possible
 int countA = 0;
 int countB = 0;
 
-int leaveBrequest = 0;
-
-
-
-// I can't allow visitors to enter hallA  from outside when there is only one place left in hallA
-// because I don't know in advance whether the visitor is willing to enter hallB or not
-// this is very important because if I let to a situation that hallB is full
-// and hallA is full and all processes from hallA want to enter hallB, then I would 
-// have the deadlock
-// to prevent this, I decided to use mutexes and conditional variables instead of 
-// counting semaphores, even though semaphores seemed to be more intuitive at 
-// a first glance.
-
-// mutex locks the counts
-// cond var sends signal if some thread left hallB to unlock the mutex
-// use property of cond var that it temporaily unlocks the mutex
-
-// mutexes are always nested -> avoid the risk of deadlock
 
 void* program(void* args) {
 
@@ -122,41 +103,3 @@ void* program(void* args) {
             break;
     }
 }
-/*
-int main() {
-
-    // initialisation
-    pthread_mutex_init(&mutexHallA, NULL);
-    pthread_mutex_init(&mutexHallB, NULL);
-    pthread_cond_init(&condDoorA, NULL);
-    pthread_cond_init(&condDoorB, NULL);
-
-    // creating threads
-    for (int i = 0; i < THREAD_NUM; i++) {
-
-        // I want to pass ID of a thread to the thread
-        int* a = malloc(sizeof(int));
-        *a = i;
-
-        if (pthread_create(&threads[i], NULL, program1BETA, a) != 0) {
-            perror("Failed creating threads");
-            return 2;
-        }
-    }
-
-    
-    // joining threads
-    for (int i = 0; i < THREAD_NUM; i++) {
-        if (pthread_join(threads[i], NULL) != 0) {
-            perror("Failed joining threads");
-            return 3;
-        }
-    }
-    pthread_mutex_destroy(&mutexHallA);
-    pthread_mutex_destroy(&mutexHallB);
-    pthread_cond_destroy(&condDoorA);
-    pthread_cond_destroy(&condDoorB);
-
-
-    return 0;
-}*/
