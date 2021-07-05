@@ -41,9 +41,9 @@ My project consists of only a single program, which as I believe satisfies both 
 ---
 ## About variables known at compile time
 
-- `THREAD_NUM` = 20: number of running threads (not equal to the total number of visitors 
-- `NA` = 2: limit for hall A
-- `NB` = 1: limit for hall B
+- `THREAD_NUM` = 25: number of running threads (not equal to the total number of visitors 
+- `NA` = 6: limit for hall A
+- `NB` = 4: limit for hall B
 - `PROB_OF_B` = 0.7: the probability that visitor will decide to visit hall B
 
 #### Variables not related with synchronisation problem:
