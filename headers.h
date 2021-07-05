@@ -2,9 +2,9 @@
 #define HEADERS
 
 // definitions
-#define THREAD_NUM 20   // number of active threads
-#define NA 2          // capacity of hallA
-#define NB 1          // capacity of hallB
+#define THREAD_NUM 25   // number of active threads
+#define NA 6          // capacity of hallA
+#define NB 4          // capacity of hallB
 #define PROB_OF_B 0.7                 // probability of entering hallB
 #define PROB_OF_ENTERING_AGAIN 0.75    // probability of continuing execution
                                         // by a given thread
