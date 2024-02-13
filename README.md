@@ -1,4 +1,5 @@
 # OS-CP_final
+> This repo contains the final project on **Operating Systems & Concurrent Progrramming**
 
 My project consists of only a single program, which as I believe satisfies both conditons:
 1. Visiting a museum at the same time by as many people as possible,
